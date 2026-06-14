@@ -363,8 +363,8 @@ Experience or seniority is offered in place of an approach. The track record may
 
 A proposal is restated back as agreement, adding no decision, ownership, or new constraint. Reads as commitment but moves nothing.
 
-- **Fails:** Single intake, understand the hidden streams, decide the operating model. I'm aligned with all of that.
-- **OK:** Agreed on all three. I'll own the operating-model decision and bring a recommendation to the next board meeting; the other two are yours to drive.
+- **Fails:** One shared roadmap, surface the hidden dependencies, then choose the team structure. I'm aligned with all of that.
+- **OK:** Agreed on all three. I'll own the team-structure decision and bring a recommendation to next month's review; the other two are yours to drive.
 - **Frames:** analytical: defect, advocacy: advisory, sales: advisory, status: defect
 
 ### `MANAGEMENT_REASSURANCE_ENACTS_RISK`
@@ -373,8 +373,8 @@ A proposal is restated back as agreement, adding no decision, ownership, or new 
 
 A sentence pre-empts the exact failure it then commits, the reassurance stands in for the action that would prevent it.
 
-- **Fails:** That's not something I'm going to acknowledge and move on from. Let's make it an early discussion.
-- **OK:** Rather than note it and move on, here's the first action: I've put a continuity review on next week's agenda with a named owner.
+- **Fails:** That's not something I'm going to let slide; we'll make it a priority.
+- **OK:** Rather than just flag the slipped deadline, here's the first action: I've moved the launch review to Thursday with a named owner for each gap.
 - **Frames:** analytical: defect, advocacy: advisory, sales: advisory, status: defect
 
 ## Substantiation

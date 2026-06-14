@@ -48,8 +48,9 @@ wire the codes into an eval harness:
 - [`/packs/grounding.yaml`](/packs/grounding.yaml) , reasoning-environment warning lights
 - [`/packs/management.yaml`](/packs/management.yaml) , commitment-without-mechanism
 
-Browse every code in the [code catalog](codes.md), or read the [design](design.md)
-for why the ontology is the asset and how the frame gate works.
+Browse every code in the [code catalog](codes.md), see [worked examples](examples.md)
+of real public text (AI and human) run through the rubric, or read the
+[design](design.md) for why the ontology is the asset and how the frame gate works.
 
 ## Status
 

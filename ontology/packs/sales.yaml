@@ -31,8 +31,8 @@ codes:
       A testimonial, logo, or "used by leading X" claim is made with no verifiable
       specifics (who, when, what result).
     cues: [trusted by, used by leading, our customers love, join thousands]
-    example_fail: "Trusted by leading processors across the industry."
-    example_ok: "Three of the top-ten NZ dairy processors use it for tender execution (reference calls available)."
+    example_fail: "Trusted by leading companies across the industry."
+    example_ok: "Three of the ten largest grocery chains run it in production for inventory reconciliation; two will take reference calls."
     default_severity: revise
     domains: [sales, marketing]
     applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
