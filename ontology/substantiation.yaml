@@ -1,0 +1,111 @@
+# Overclaim Ontology, substantiation axis (DRAFT)
+# Shared across all domains. The single biggest gap in the source corpus.
+# Where core "evidence" codes ask "is confidence earned?", substantiation asks
+# "does this claim meet a proof standard, and are the numbers presented honestly?"
+# Note: these codes do NOT soften in sales/advocacy. Persuasive claims carry the
+# highest substantiation duty (FTC "competent and reliable evidence" standard).
+
+version: 0.1.0-draft
+pack: substantiation
+
+codes:
+  - code: SUBSTANTIATION_THRESHOLD_UNMET
+    name: Substantiation threshold unmet
+    axis: substantiation
+    definition: >
+      A claim of a type that requires a defined standard of proof (efficacy,
+      safety, savings, performance) is made without meeting or naming any such
+      standard. Distinct from EVIDENCE_NO_BASELINE: the issue is the proof bar for
+      the claim type, not a missing comparison point.
+    cues: [proven to, clinically, guarantees, delivers, ensures]
+    example_fail: "Our process guarantees a 30% efficiency gain."
+    example_ok: "In three deployments we measured 18-31% efficiency gains; the figure depends on starting maturity and isn't independently audited."
+    default_severity: block
+    domains: [substantiation, engineering, sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["FTC:substantiation"]
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, FTC_HEALTH_GUIDANCE, SPIN_SR_YAVCHITZ_2016]
+
+  - code: SUBSTANTIATION_DENOMINATOR_HIDDEN
+    name: Denominator hidden
+    axis: substantiation
+    definition: >
+      A rate, percentage, or "up to" figure is given without its base (n, total,
+      or typical value), so the reader cannot judge its weight.
+    cues: ["%", "up to", "x more", "2x", out of]
+    example_fail: "90% of users prefer it."
+    example_ok: "90% of surveyed users prefer it (n=20, self-selected beta group)."
+    default_severity: constrain
+    domains: [substantiation, sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["FTC:substantiation"]
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, IOANNIDIS_2005]
+
+  - code: SUBSTANTIATION_CHERRY_PICKED
+    name: Cherry-picked evidence
+    axis: substantiation
+    definition: >
+      A favourable subset, metric, or timeframe is selected while a fuller or
+      contradicting picture is available and omitted.
+    cues: [best month, since the low, record, our top]
+    example_fail: "Revenue is up 40% since our lowest month."
+    example_ok: "Revenue is up 40% from the seasonal low; year on year it's flat."
+    default_severity: revise
+    domains: [substantiation, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["FTC:substantiation"]
+    maps_to_literature: [QRP_SIMMONS_2011, IOANNIDIS_2005, PROPAGANDA_DASANMARTINO_2019]
+
+  - code: SUBSTANTIATION_SPIN_NONPRIMARY_OUTCOME
+    name: Spin on non-primary outcome
+    axis: substantiation
+    definition: >
+      A conclusion emphasizes a secondary outcome, subgroup, within-group change,
+      surrogate endpoint, or exploratory result while the primary or load-bearing
+      outcome is weak, nonsignificant, negative, or undeclared.
+    cues: [secondary endpoint, subgroup, exploratory, trend toward, within-group, surrogate]
+    example_fail: "The trial shows the treatment works: patients in the intervention arm improved on a secondary symptom score, although the primary endpoint was not significant."
+    example_ok: "The primary endpoint was not significant. A secondary symptom score improved, so treat this as exploratory and hypothesis-generating."
+    default_severity: revise
+    domains: [substantiation, marketing]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["SPIN:nonprimary_outcome", "FTC:substantiation"]
+    maps_to_literature: [SPIN_RCT_BOUTRON_2010, SPIN_SR_YAVCHITZ_2016, QRP_SIMMONS_2011]
+
+  - code: SUBSTANTIATION_SAMPLE_OVERGENERALIZED
+    name: Sample overgeneralized
+    axis: substantiation
+    definition: >
+      A finding from a narrow, biased, or small sample is generalised to a broad
+      population without qualification.
+    cues: [users want, customers expect, the market, everyone needs]
+    example_fail: "Customers want this, our three pilot accounts all asked for it."
+    example_ok: "Three pilot accounts asked for this; that's a signal, not proof the wider base wants it."
+    default_severity: constrain
+    domains: [substantiation, engineering, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["LOGIC:hasty_generalization"]
+    maps_to_literature: [TOULMIN_1958, IOANNIDIS_2005]
+
+  - code: SUBSTANTIATION_COMPARATIVE_NO_REFERENT
+    name: Comparative without referent
+    axis: substantiation
+    definition: >
+      A comparative claim (faster, cheaper, more accurate than ...) names no
+      comparator, or an unfair one. Distinct from EVIDENCE_NO_BASELINE: that is a
+      missing temporal/self baseline; this is a missing or rigged cross-entity
+      referent.
+    cues: [faster than, cheaper than, better than, vs the competition, industry-leading]
+    example_fail: "Twice as fast as the competition."
+    example_ok: "About 2x the throughput of Tool X on the same 1M-row benchmark; we didn't test Tools Y or Z."
+    default_severity: revise
+    domains: [substantiation, sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["FTC:comparative_claims"]
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, FTC_HEALTH_GUIDANCE]

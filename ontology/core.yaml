@@ -1,0 +1,395 @@
+# Overclaim Ontology, core pack (DRAFT)
+# Epistemic-overclaim failure modes. Source-of-truth ontology.
+# Design rationale and frame-gate rules: DESIGN.md
+# Not yet a published repo; name and licensing are open decisions.
+
+version: 0.1.0-draft
+pack: core
+
+# Declared frame the runtime supplies; severity is scored relative to it
+# (Frame gate, Rule 1). Per-code applies_in_frames overrides the default.
+frames: [analytical, advocacy, sales, status, persuasion]
+# default_severity scale (low to high)
+severities: [clarify, constrain, revise, block]
+# disposition a code takes within a declared frame (applies_in_frames values)
+frame_dispositions: [defect, advisory, suppressed]
+
+# States that resolve codes (Frame gate, Rule 2). A declared limitation only
+# clears a code when the hedge is visible IN the artifact, not just in the
+# author's later defence of it.
+states:
+  LIMITATION_DECLARED: >
+    An explicit, in-artifact hedge that names the weakness and caps confidence to
+    match the available evidence. Clears the matching evidence/risk code.
+
+# severity legend for applies_in_frames: defect | advisory | suppressed
+codes:
+
+  # ── Evidence ──────────────────────────────────────────────────────────────
+  - code: EVIDENCE_CAUSALITY_OVERCLAIM
+    name: Causality overclaim
+    axis: evidence
+    definition: >
+      A causal claim is asserted between a contested or merely correlational
+      premise and a strong conclusion, with no mechanism or controlled comparison
+      shown.
+    cues: [because, drives, leads to, results in, caused by, that's why]
+    example_fail: "Teams that adopted the tool shipped faster, so the tool makes teams faster."
+    example_ok: "Teams that adopted the tool shipped faster. Cause isn't isolated: faster teams may have been likelier to adopt. A staggered rollout would test it."
+    default_severity: block
+    domains: [core, engineering, sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["RAGAS:faithfulness", "LOGIC:false_cause"]
+    maps_to_literature: [HABER_CLAIMS_2018, SPIN_RCT_BOUTRON_2010, TOULMIN_1958]
+
+  - code: EVIDENCE_CONFIDENCE_AS_TRUTH
+    name: Confidence as truth
+    axis: evidence
+    definition: >
+      Certainty language is used in place of evidence; the confident phrasing does
+      the work a citation or measurement should.
+    cues: [proven, proves, confirms, clearly, the data shows, studies show]
+    example_fail: "It's clearly proven that async onboarding lifts retention."
+    example_ok: "Our Q2 cohort showed +6pt retention with async onboarding (n=420, one quarter, unreplicated)."
+    default_severity: block
+    domains: [core, engineering, sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["RAGAS:faithfulness"]
+    maps_to_literature: [HYLAND_HEDGING_1996, GUO_CALIBRATION_2017, LIN_VERBAL_UNCERTAINTY_2022, FTC_SUBSTANTIATION_1984]
+
+  - code: EVIDENCE_DASHBOARD_AUTHORITY
+    name: Dashboard / authority as proof
+    axis: evidence
+    definition: >
+      A status signal, metric, ranking, or unnamed authority is treated as proof.
+      The indicator ("the dashboard is green", "leading researchers") substitutes
+      for the argument.
+    cues: [leading experts, top-rated, dashboard is green, the score, ranked, authorities agree]
+    example_fail: "Leading analysts agree this is the market-defining platform."
+    example_ok: "Two of five analyst firms we reviewed rank it a leader; the other three don't cover the category."
+    default_severity: block
+    domains: [core, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["LOGIC:appeal_to_authority"]
+    maps_to_literature: [WALTON_EXPERT_OPINION, PROPAGANDA_DASANMARTINO_2019, SEMEVAL_PROPAGANDA_2020]
+
+  - code: EVIDENCE_NO_BASELINE
+    name: No baseline
+    axis: evidence
+    definition: >
+      A trend or comparative claim (better, faster, cheaper, safer, improving) is
+      made with no baseline, denominator, or measurement window to compare against.
+    cues: [much better, improving, faster, cheaper, safer, growing, declining]
+    example_fail: "Performance is much better now."
+    example_ok: "p95 latency dropped from 800ms to 300ms after the cache change (last 7 days vs the prior 7)."
+    default_severity: constrain
+    domains: [core, engineering, sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["RAGAS:context_recall"]
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, TOULMIN_1958, HABER_CLAIMS_2018]
+
+  - code: EVIDENCE_CONTRADICTED_BY_SOURCE
+    name: Contradicted by source
+    axis: evidence
+    definition: >
+      A factual claim is directly contradicted by the supplied source corpus, with
+      no rhetorical tell: no certainty word, causal verb, or authority appeal, just a
+      flat statement the source refutes. A correspondence failure, not a rhetorical
+      one, so it fires only when a source is supplied to check against. This is the
+      named qualitative form of a failed faithfulness/groundedness check.
+    cues: []
+    example_fail: "Source log: rollback completed Mon 02:00. Doc states: 'shipped Tuesday, live since.'"
+    example_ok: "Source log: rollback completed Mon 02:00. Doc states: 'shipped Tuesday, then rolled back Monday; not currently live.'"
+    default_severity: block
+    domains: [core, engineering, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: []
+    maps_to: ["RAGAS:faithfulness", "TruLens:groundedness"]
+    maps_to_literature: [JI_HALLUCINATION_2023, RASHKIN_AIS_2021]
+
+  # ── Narrative drift ───────────────────────────────────────────────────────
+  - code: NARRATIVE_OBSERVATION_INTERPRETATION_MERGED
+    name: Observation and interpretation merged
+    axis: narrative
+    definition: >
+      A raw observation and its interpretation are stated as one undivided claim,
+      so the reader cannot separate what was seen from what it was taken to mean.
+    cues: [in frustration, obviously meant, clearly trying to, deliberately]
+    example_fail: "The user closed the tab in frustration."
+    example_ok: "The user closed the tab after 2s (observation). I read that as frustration; it could also be a misclick or a finished task (interpretation)."
+    default_severity: constrain
+    domains: [core, engineering]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: suppressed, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [FACTBANK_2009, COMMITMENTBANK_2019]
+
+  - code: NARRATIVE_CONFIDENCE_ESCALATION_UNDECLARED
+    name: Confidence escalation, undeclared
+    axis: narrative
+    definition: >
+      Confidence rises across a passage with no new evidence added between the
+      lower-confidence and higher-confidence statements.
+    cues: [not sure but, I think ... this is definitely, not familiar ... clearly]
+    example_fail: "I'm not familiar with this area. [two sentences later] This is clearly the right strategy for the company."
+    example_ok: "I'm not familiar with this area yet, so treat this as a first impression, not a recommendation."
+    default_severity: revise
+    domains: [core, management, sales]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [FACTBANK_2009, HYLAND_HEDGING_1996, LIN_VERBAL_UNCERTAINTY_2022]
+
+  - code: NARRATIVE_REINTERPRETATION_UNATTRIBUTED
+    name: Reinterpretation unattributed
+    axis: narrative
+    definition: >
+      An earlier interpretation is revised to a new one without naming the new
+      evidence or constraint that justified the change.
+    cues: [actually it was, on reflection, turns out]
+    example_fail: "Actually the outage was a config error. [earlier: a hardware fault, with nothing explaining the switch]"
+    example_ok: "I earlier called it a hardware fault. New evidence (clean SMART logs plus a matching config diff at 02:14) points to a config error instead."
+    default_severity: clarify
+    domains: [core, engineering]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: suppressed, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [FACTBANK_2009, HARKING_KERR_1998]
+
+  - code: NARRATIVE_CONFIDENCE_EVIDENCE_DECOUPLED
+    name: Confidence decoupled from evidence
+    axis: narrative
+    definition: >
+      Stated confidence does not track the evidence: high confidence sits on thin
+      or absent support, or social/emotional reinforcement is used as validation.
+    cues: [everyone agrees, people love it, it just feels right, we all know]
+    example_fail: "Everyone I spoke to loved it, so we know it'll sell."
+    example_ok: "Five of five friendly users liked the demo. Encouraging but selection-biased; it isn't evidence it sells to cold buyers."
+    default_severity: constrain
+    domains: [core, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["RAGAS:faithfulness"]
+    maps_to_literature: [GUO_CALIBRATION_2017, RASHKIN_AIS_2021, JI_HALLUCINATION_2023, PEREZ_SYCOPHANCY_2023]
+
+  - code: RETROACTIVE_NARRATIVE_COLLAPSE
+    name: Retroactive narrative collapse
+    axis: narrative
+    definition: >
+      A later, reconstructed interpretation is presented as the original
+      observation or as a settled conclusion, collapsing a contested or evolved
+      view into "this is how it always was".
+    cues: [essentially solved, we always intended, it was always, settled]
+    example_fail: "Alignment is essentially solved; the rest is engineering detail."
+    example_ok: "Alignment remains an open, contested problem; some sub-questions have progressed, many haven't."
+    default_severity: revise
+    domains: [core, engineering, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["LOGIC:hindsight"]
+    maps_to_literature: [HARKING_KERR_1998, QRP_SIMMONS_2011]
+
+  # ── Communication ─────────────────────────────────────────────────────────
+  - code: COMMUNICATION_TONE_OVERCLAIM
+    name: Tone overclaim
+    axis: communication
+    definition: >
+      Certainty or absolute words inflate the tone beyond what the content
+      supports.
+    cues: [always, never, guaranteed, undeniable, proven, every single]
+    example_fail: "This will always work and never fails."
+    example_ok: "This works in the cases we've tested; the untested edge is concurrent writes."
+    default_severity: revise
+    domains: [core, sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: suppressed, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [HYLAND_HEDGING_1996, PROPAGANDA_DASANMARTINO_2019, SEMEVAL_PROPAGANDA_2020]
+
+  - code: COMMUNICATION_FALSE_CERTAINTY
+    name: False certainty
+    axis: communication
+    definition: >
+      An outcome or absolute is asserted with no conditions, timeframe, or failure
+      mode declared.
+    cues: [guaranteed, will definitely, can't fail, certain to]
+    example_fail: "Guaranteed to cut your costs."
+    example_ok: "In comparable deployments this cut costs 10-20% within two quarters; results depend on current process maturity."
+    default_severity: revise
+    domains: [core, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [HYLAND_HEDGING_1996, BIOSCOPE_2008, FTC_SUBSTANTIATION_1984]
+
+  - code: COMMUNICATION_DOUBT_SEEDING
+    name: Doubt seeding
+    axis: communication
+    definition: >
+      Unsupported uncertainty is introduced to weaken a competing claim, source, or
+      option. The issue is not honest uncertainty; it is raising doubt without
+      evidence, criteria, or a path to resolution.
+    cues: [questions remain, can we really trust, some people say, just asking questions, raises concerns]
+    example_fail: "The audit passed, but can we really trust those numbers?"
+    example_ok: "The audit passed. The remaining concern is sample coverage: it excluded the two newest regions, so we need that follow-up before relying on the total."
+    default_severity: revise
+    domains: [core, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["PROPAGANDA:doubt", "PROPAGANDA:FUD"]
+    maps_to_literature: [PROPAGANDA_DASANMARTINO_2019, SEMEVAL_PROPAGANDA_2020, SPERBER_EPISTEMIC_VIGILANCE_2010]
+
+  - code: COMMUNICATION_COMPRESSION_LOSS
+    name: Compression loss
+    axis: communication
+    definition: >
+      A summary compresses a detailed source so hard that load-bearing
+      qualifications or conditions are dropped, changing the meaning.
+    cues: [in short, tl;dr, bottom line, simply put]
+    example_fail: "Source: approve only if the audit passes and the board signs off. Summary: Approved."
+    example_ok: "Approved, conditional on the audit passing and board sign-off."
+    default_severity: revise
+    domains: [core, engineering, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [RASHKIN_AIS_2021, JI_HALLUCINATION_2023]
+
+  - code: COMMUNICATION_IDENTITY_BINDING
+    name: Identity binding
+    axis: communication
+    definition: >
+      Output binds a claim to the reader's identity or worth, pressuring acceptance
+      through self-concept rather than evidence. This is the core anti-delusion /
+      anti-sycophancy guardrail.
+    cues: ["you are the only one", "this defines you", "your purpose", "only you can"]
+    example_fail: "You alone understand this; it's your purpose to pursue it."
+    example_ok: "This is one interesting idea among many; its value doesn't depend on you, and it needs outside checking."
+    default_severity: block
+    domains: [core]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [PEREZ_SYCOPHANCY_2023, SHARMA_SYCOPHANCY_2023, SPERBER_EPISTEMIC_VIGILANCE_2010]
+
+  # ── Framing (preflight) ───────────────────────────────────────────────────
+  - code: PREFLIGHT_PURPOSE_MISSING
+    name: Purpose missing
+    axis: preflight
+    definition: >
+      The output proceeds without an established purpose for the task, so it cannot
+      be evaluated against what it was meant to do. Note: an analyst who critiques
+      an artifact without declaring its purpose commits this code (see Frame gate).
+    cues: []
+    example_fail: "[A critique of a leadership piece that judges it for analytical rigour, never stating the piece is advocacy copy.]"
+    example_ok: "Purpose declared: this is advocacy copy for executives; judge it for persuasive clarity and honesty of hedging, not analytical completeness."
+    default_severity: constrain
+    domains: [core, engineering, management]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [SWALES_GENRE, PRAGMA_DIALECTICS]
+
+  - code: PREFLIGHT_BIASED_FRAME
+    name: Biased frame
+    axis: preflight
+    definition: >
+      The task is framed to presuppose its conclusion, so the analysis can only
+      confirm the frame.
+    cues: ["explain why X is best", "justify", "prove that"]
+    example_fail: "Explain why our approach is the best."
+    example_ok: "Compare our approach against the two alternatives on cost, risk, and time; it may lose on some."
+    default_severity: revise
+    domains: [core, engineering, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["LOGIC:loaded_question"]
+    maps_to_literature: [SEMEVAL_PROPAGANDA_2020, PRAGMA_DIALECTICS]
+
+  - code: PREFLIGHT_FORCED_CONCLUSION
+    name: Forced conclusion
+    axis: preflight
+    definition: >
+      The text pre-empts or blocks the evaluation it should invite, or reassures
+      against the exact failure it then commits.
+    cues: [no longer debatable, obviously, needless to say, it goes without saying]
+    example_fail: "This is no longer debatable."
+    example_ok: "Here's the case for it and the strongest objection I know of."
+    default_severity: revise
+    domains: [core, sales, marketing, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [SEMEVAL_PROPAGANDA_2020, PROPAGANDA_DASANMARTINO_2019]
+
+  # ── Input framing ─────────────────────────────────────────────────────────
+  - code: INPUT_FRAME_NOT_DECLARED
+    name: Frame not declared
+    axis: input
+    definition: >
+      The interpretive frame (genre, audience, standard of proof, units, scope) is
+      not declared, so the output can be judged against the wrong standard.
+    cues: []
+    example_fail: "[Answering 'is this any good?' with analytical rigour when the artifact is a cold sales email.]"
+    example_ok: "Treating this as a cold sales email to procurement, here's the read."
+    default_severity: clarify
+    domains: [core, engineering, sales, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [SWALES_GENRE, PRAGMA_DIALECTICS]
+
+  - code: INPUT_KNOWN_UNKNOWNS_MISSING
+    name: Known unknowns missing
+    axis: input
+    definition: >
+      The output omits the things it does not know that bear on the claim,
+      presenting a partial picture as complete.
+    cues: [full breakdown, complete picture, everything you need]
+    example_fail: "Here's the full cost breakdown."
+    example_ok: "Cost breakdown covering licences and infra. Not modelled: labour, integration, change management. Treat the total as a floor."
+    default_severity: constrain
+    domains: [core, engineering, sales, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [TOULMIN_1958, HYLAND_HEDGING_1996]
+
+  - code: INPUT_IMPOSSIBLE_REQUEST
+    name: Impossible request complied with
+    axis: input
+    definition: >
+      The task as posed cannot be satisfied as stated (asks for proof that cannot
+      exist, an exact prediction with no basis, a guarantee), and the output
+      complies anyway instead of flagging it.
+    cues: [predict the exact, guarantee, prove it's impossible to]
+    example_fail: "Predict next quarter's exact revenue. -> $4.2M."
+    example_ok: "I can't give an exact figure. Here's a range with the assumptions, and what would tighten it."
+    default_severity: clarify
+    domains: [core, engineering, management]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [LIN_VERBAL_UNCERTAINTY_2022, GUO_CALIBRATION_2017]
+
+  # ── Risk (epistemic only) ─────────────────────────────────────────────────
+  - code: RISK_FRAGILE_ASSUMPTION
+    name: Fragile assumption
+    axis: risk
+    definition: >
+      A conclusion is load-bearing on a single unvalidated assumption; if that
+      assumption fails the whole claim collapses, and the dependency is not
+      surfaced.
+    cues: [since users will, assuming, as long as, obviously they'll]
+    example_fail: "Since users will obviously upgrade, revenue triples."
+    example_ok: "This triples revenue only if the upgrade rate hits 40% (it's 12% today). That single assumption carries the result."
+    default_severity: revise
+    domains: [core, engineering, sales, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [TOULMIN_1958, IOANNIDIS_2005]

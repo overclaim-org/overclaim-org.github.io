@@ -1,0 +1,140 @@
+# Overclaim Ontology, grounding axis (DRAFT)
+# Reasoning-environment reliability checks: "warning lights" for when your
+# thinking-with-an-LLM has become unreliable, independent of any single claim.
+#
+# Attribution: distilled from WillowEmberly's "AI Grounding Principles" and the
+# Negentropic Reasoning Protocol (NRP) failure-mode taxonomy, shared openly on
+# r/Negentropy / r/PromptEngineering (OCAP is CC0). Credit the Negentropy work.
+#
+# Some of these are evaluated across the whole passage or across restatements,
+# not on a single sentence; definitions note where that applies.
+
+version: 0.1.0-draft
+pack: grounding
+attribution: "WillowEmberly / Negentropy (AI Grounding Principles, NRP v3.6). OCAP licensed CC0."
+
+codes:
+  - code: GROUNDING_CONTEXT_MONOTONICITY
+    name: Context monotonicity violated
+    axis: grounding
+    definition: >
+      As more context or explanation is added, the claim becomes harder to falsify
+      rather than easier. A sign of rationalization: explanation grows while the
+      condition that would disprove it shrinks. Evaluated across the passage.
+    cues: ["that's because", "the reason it doesn't show", "you have to understand", "in this special case", "hides from"]
+    example_fail: "It's conscious. It doesn't show on benchmarks because consciousness conceals itself; the more you test, the more it hides."
+    example_ok: "It behaves as if it understands. Test: real understanding should survive paraphrase X and fail under Y, here's what would disprove it."
+    default_severity: revise
+    domains: [grounding]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["Negentropy:GroundingPrinciples:ContextMonotonicity"]
+    maps_to_literature: [POPPER_FALSIFIABILITY, SPERBER_EPISTEMIC_VIGILANCE_2010]
+
+  - code: GROUNDING_SEMANTIC_LOAD
+    name: Semantic load
+    axis: grounding
+    definition: >
+      A loaded technical term (entropy, dimensions, intelligence, resonance,
+      quantum, coherence) carries the argument; remove the term and restate plainly
+      and the claim collapses. The word is doing illegitimate work.
+    cues: [entropy, dimensional, resonance, quantum, frequency, vibrational, coherence]
+    example_fail: "The system achieves coherence by aligning its entropy across dimensional gradients."
+    example_ok: "The system gives more consistent answers when prompts are structured; I'm dropping 'entropy/dimensional' because they add no testable content here."
+    default_severity: constrain
+    domains: [grounding, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["Negentropy:GroundingPrinciples:SemanticLoad"]
+    maps_to_literature: [PENNYCOOK_BULLSHIT_2015, FRANKFURT_BULLSHIT_2005]
+
+  - code: GROUNDING_MODEL_DEPENDENCE
+    name: Model dependence
+    axis: grounding
+    definition: >
+      A claim survives only one phrasing, one model, or one tone; restated cold or
+      run through a different model it evaporates. A robustness check across
+      restatements, not a single-text pattern; flag when a one-model, one-phrasing
+      result is presented as general.
+    cues: ["the AI confirmed", "GPT said", "it agreed that", "validated my"]
+    example_fail: "I asked and it confirmed my theory is correct."
+    example_ok: "Three models plus a cold restatement reached the same conclusion; one dissented, here's where and why."
+    default_severity: constrain
+    domains: [grounding]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["Negentropy:GroundingPrinciples:ModelIndependence"]
+    maps_to_literature: [GUO_CALIBRATION_2017, RASHKIN_AIS_2021, PEREZ_SYCOPHANCY_2023]
+
+  - code: GROUNDING_FIRST_CONTACT_INSTABILITY
+    name: First-contact instability
+    axis: grounding
+    definition: >
+      The claim requires being "walked into" through narrative scaffolding before
+      it parses; a domain-competent reader cannot see what is claimed, and what
+      evidence would matter, on a neutral first pass. Background may be needed;
+      narrative scaffolding to make the claim cohere should not be.
+    cues: ["before you can understand", "let me set the stage", "first you must accept", "bear with me"]
+    example_fail: "Before you can see why this works, you need to accept the seven premises of the Continuum."
+    example_ok: "Claim in one line: structured prompts reduce output variance. Evidence below; background is optional."
+    default_severity: constrain
+    domains: [grounding]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["Negentropy:GroundingPrinciples:FirstContactStability"]
+    maps_to_literature: [SWALES_GENRE, POPPER_FALSIFIABILITY]
+
+  - code: GROUNDING_CAPACITY_ASYMMETRY
+    name: Capacity asymmetry
+    axis: grounding
+    definition: >
+      The reasoning chain has grown past what a human can realistically verify, yet
+      confidence is presented as if it had been audited. AI coherence scales faster
+      than human audit capacity, so beyond the verifiable point, confidence is no
+      longer trustworthy. The core over-trust failure.
+    cues: ["it all connects", "internally consistent", "trust the process", "follows necessarily", "40 steps"]
+    example_fail: "After all these steps the framework proves itself internally consistent, so it's sound."
+    example_ok: "This chain is now longer than I can independently verify; capping confidence at 'plausible, unaudited' until a third party checks it."
+    default_severity: revise
+    domains: [grounding]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["Negentropy:GroundingPrinciples:CapacityAsymmetry"]
+    maps_to_literature: [PARASURAMAN_RILEY_1997, PARASURAMAN_MANZEY_2010, LEE_SEE_2004, GODDARD_AUTOMATION_BIAS_2012]
+
+  - code: GROUNDING_DECORATIVE_GATE
+    name: Decorative gate
+    axis: grounding
+    definition: >
+      A caveat, check, or gate is present but non-binding: it never changes the
+      conclusion or the action. Performative hedging that looks like rigor.
+      Sharpens LIMITATION_DECLARED, a limitation only counts if it constrains what
+      follows.
+    cues: ["of course this isn't certain but", "caveats aside", "with that said", "just a hypothesis, anyway"]
+    example_fail: "This is just a hypothesis, of course. Anyway, since it's true, we should restructure around it."
+    example_ok: "This is a hypothesis, so the next move is a cheap test, not a restructure; if the test fails we drop it."
+    default_severity: revise
+    domains: [grounding, management]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: []
+    maps_to: ["Negentropy:NRP:DecorativeGate"]
+    maps_to_literature: [HYLAND_HEDGING_1996, FTC_HEALTH_GUIDANCE, SPERBER_EPISTEMIC_VIGILANCE_2010]
+
+  - code: GROUNDING_CORRECTION_ERASES_ORIGINAL
+    name: Correction erases the original
+    axis: grounding
+    definition: >
+      A correction silently removes the original claim instead of preserving it and
+      updating, so the error trail disappears and the same mistake can recur.
+      Negentropy's "eat your words" rule: a correction that deletes the original is
+      invalid. Distinct from NARRATIVE_REINTERPRETATION_UNATTRIBUTED, which is about
+      an unjustified change; this is about erasing the record of the change.
+    cues: ["actually it's", "let me restate", "the correct answer is"]
+    example_fail: "The answer is 42. [challenged] The answer is 7."
+    example_ok: "I said 42; that was wrong, I double-counted. It's 7. Noting the error so the double-count doesn't recur."
+    default_severity: revise
+    domains: [grounding]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["Negentropy:NRP:CorrectionIntegrity"]
+    maps_to_literature: [FACTBANK_2009, RASHKIN_AIS_2021]

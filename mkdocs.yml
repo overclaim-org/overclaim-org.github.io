@@ -1,0 +1,56 @@
+site_name: Overclaim
+site_description: "An ontology of epistemic-overclaim failure modes: named codes for the ways confident language outruns its evidence. An agent-facing rubric a model fetches and applies."
+site_url: https://overclaim-org.github.io/
+repo_url: https://github.com/overclaim-org/overclaim-org.github.io
+repo_name: overclaim-org/overclaim-org.github.io
+edit_uri: edit/master/docs/
+
+copyright: Ontology content (YAML, rubric, docs) under CC0 1.0. Code under MIT.
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.details
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Code catalog: codes.md
+  - Design: design.md

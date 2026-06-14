@@ -1,0 +1,72 @@
+# Overclaim Ontology, management / commercial pack (DRAFT)
+# Failure modes in leadership, organisational, and commercial communication.
+# Validated against two live exec messages (see DESIGN.md, frame gate section).
+
+version: 0.1.0-draft
+pack: management
+
+codes:
+  - code: MANAGEMENT_COMMITMENT_WITHOUT_MECHANISM
+    name: Commitment without mechanism
+    axis: management
+    definition: >
+      A promise or commitment is stated with no owner, date, or first step. The
+      claim is about action, and what is missing is the mechanism, not the
+      evidence (the distinction from NARRATIVE_CONFIDENCE_EVIDENCE_DECOUPLED).
+    cues: ["I'll make sure", "put a plan around it", "let's agree a way", "on my radar", "we need to", "early discussion"]
+    example_fail: "We need to work through the key-person risk properly, let's make that an early discussion."
+    example_ok: "I'll book a 60-min session this week to scope the key-person risk; output is a written continuity plan with a named backup by month-end."
+    default_severity: revise
+    domains: [management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [SEARLE_SPEECH_ACTS_1969, GOLLWITZER_IMPLEMENTATION_1999]
+
+  - code: MANAGEMENT_ENDORSEMENT_AS_CONTRIBUTION
+    name: Endorsement as contribution
+    axis: management
+    definition: >
+      A proposal is restated back as agreement, adding no decision, ownership, or
+      new constraint. Reads as commitment but moves nothing.
+    cues: ["I'm aligned with all of that", "you've got it right", "agree with all", "makes sense"]
+    example_fail: "Single intake, understand the hidden streams, decide the operating model. I'm aligned with all of that."
+    example_ok: "Agreed on all three. I'll own the operating-model decision and bring a recommendation to the next board meeting; the other two are yours to drive."
+    default_severity: clarify
+    domains: [management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [SEARLE_SPEECH_ACTS_1969, GOLLWITZER_IMPLEMENTATION_1999]
+
+  - code: MANAGEMENT_REASSURANCE_ENACTS_RISK
+    name: Reassurance enacts the risk
+    axis: management
+    definition: >
+      A sentence pre-empts the exact failure it then commits, the reassurance
+      stands in for the action that would prevent it.
+    cues: ["not going to just", "I won't simply", "rather than ignore", "not something I'll move on from"]
+    example_fail: "That's not something I'm going to acknowledge and move on from. Let's make it an early discussion."
+    example_ok: "Rather than note it and move on, here's the first action: I've put a continuity review on next week's agenda with a named owner."
+    default_severity: revise
+    domains: [management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [SEARLE_SPEECH_ACTS_1969, GOLLWITZER_IMPLEMENTATION_1999]
+
+  - code: MANAGEMENT_CREDENTIAL_AS_PLAN
+    name: Credential as plan
+    axis: management
+    definition: >
+      Experience or seniority is offered in place of an approach. The track record
+      may be real, but it answers "why me" not "how" or "by when".
+    cues: ["I've spent years", "I'm comfortable", "done this before", "I know this space"]
+    example_fail: "I've spent a long time managing customer relationships, I'm comfortable stepping into that role."
+    example_ok: "I'll take the customer side. Week one I'll meet the top five accounts; weekly I'll route only escalations to you, on a shared list."
+    default_severity: clarify
+    domains: [management, sales]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["LOGIC:appeal_to_authority"]
+    maps_to_literature: [WALTON_EXPERT_OPINION, SEARLE_SPEECH_ACTS_1969]

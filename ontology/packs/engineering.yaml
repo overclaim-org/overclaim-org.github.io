@@ -1,0 +1,105 @@
+# Overclaim Ontology, engineering pack (DRAFT)
+# Engineering-comms failure modes not named by core or substantiation.
+# Core EVIDENCE_*, NARRATIVE_*, and SUBSTANTIATION_* still apply to engineering
+# text (domains tags carry that); this pack adds only what they miss.
+
+version: 0.1.0-draft
+pack: engineering
+
+codes:
+  - code: ENGINEERING_SPEC_AMBIGUITY
+    name: Spec ambiguity
+    axis: engineering
+    definition: >
+      A requirement or behaviour is stated so ambiguously that it cannot be
+      verified, tested, or implemented to a single interpretation.
+    cues: [should handle, fast enough, user-friendly, properly, as needed]
+    example_fail: "The API should handle large payloads quickly."
+    example_ok: "The API returns within 200ms p95 for payloads up to 5MB; larger payloads return 413."
+    default_severity: constrain
+    domains: [engineering]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [ISO_29148_2018]
+
+  - code: ENGINEERING_ESTIMATE_ASSUMPTION_UNSTATED
+    name: Estimate assumption unstated
+    axis: engineering
+    definition: >
+      A time, cost, or effort estimate is given without the assumptions it rests
+      on, so its confidence and failure conditions are invisible.
+    cues: [should take, about a week, quick fix, trivial, straightforward]
+    example_fail: "This is a two-day job."
+    example_ok: "Two days if the auth schema is unchanged and staging mirrors prod; the migration is the risk, and it could double that."
+    default_severity: revise
+    domains: [engineering, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [ISO_29148_2018, GOLLWITZER_IMPLEMENTATION_1999]
+
+  - code: ENGINEERING_COVERAGE_ILLUSION
+    name: Coverage illusion
+    axis: engineering
+    definition: >
+      A testing or verification signal (coverage %, "tests pass", "tested") is
+      presented as confidence it does not provide: happy-path only, weak
+      assertions, or coverage of lines but not behaviour.
+    cues: [fully tested, 100% coverage, all tests pass, well tested]
+    example_fail: "It's fully tested, 95% coverage."
+    example_ok: "95% line coverage, but the concurrency and failure paths aren't exercised; correctness there is unverified."
+    default_severity: revise
+    domains: [engineering]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [COVERAGE_ORACLE_2022]
+
+  - code: ENGINEERING_BENCHMARK_UNREPRODUCIBLE
+    name: Benchmark unreproducible
+    axis: engineering
+    definition: >
+      A performance or benchmark claim omits the environment, workload, or method
+      needed to reproduce it, or reports a favourable run without the distribution.
+    cues: [benchmarks show, blazing fast, ms latency, throughput of]
+    example_fail: "Benchmarks show 10k requests per second."
+    example_ok: "10k rps on a c6i.4xlarge, 1KB payloads, keep-alive on, median of 5 runs; p99 was 4k rps."
+    default_severity: revise
+    domains: [engineering, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [ISO_29148_2018, FTC_SUBSTANTIATION_1984]
+
+  - code: ENGINEERING_COMPLEXITY_HANDWAVE
+    name: Complexity hand-wave
+    axis: engineering
+    definition: >
+      A scalability, performance, or cost assertion is made with no measurement or
+      analysis behind it ("scales linearly", "negligible overhead").
+    cues: [scales linearly, negligible, O(1), constant time, no overhead]
+    example_fail: "Adding the cache has negligible overhead."
+    example_ok: "The cache adds ~50us per call and ~200MB resident; measured under the load test, acceptable for our budget."
+    default_severity: constrain
+    domains: [engineering]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [ISO_29148_2018, TOULMIN_1958]
+
+  - code: ENGINEERING_REPRODUCIBILITY_GAP
+    name: Reproducibility gap
+    axis: engineering
+    definition: >
+      A result, fix, or root cause is claimed without the steps to reproduce or
+      independently verify it.
+    cues: [fixed, resolved, root cause was, confirmed working]
+    example_fail: "Fixed the flaky test."
+    example_ok: "Fixed the flaky test: it raced on a shared temp dir; reproduced with --parallel=8 (failed 6/10), now 0/200 after isolating the dir."
+    default_severity: clarify
+    domains: [engineering]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: suppressed, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [ISO_29148_2018, COVERAGE_ORACLE_2022]

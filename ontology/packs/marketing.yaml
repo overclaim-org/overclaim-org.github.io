@@ -1,0 +1,59 @@
+# Overclaim Ontology, marketing pack (DRAFT)
+# Only marketing-specific modes that core/substantiation/sales don't already name.
+# Comparative claims -> SUBSTANTIATION_COMPARATIVE_NO_REFERENT.
+# Implied product causation -> EVIDENCE_CAUSALITY_OVERCLAIM (domains includes marketing).
+# Social proof -> SALES_SOCIAL_PROOF_UNVERIFIABLE.
+
+version: 0.1.0-draft
+pack: marketing
+
+codes:
+  - code: MARKETING_PUFFERY_AS_FACT
+    name: Puffery as fact
+    axis: marketing
+    definition: >
+      A subjective superlative (best, #1, world-class, revolutionary) is presented
+      as a factual, substantiable claim rather than obvious opinion. Pure puffery a
+      reader discounts is fine; the failure is puffery dressed as measurable fact.
+    cues: ["#1", best, world-class, revolutionary, market-leading, unmatched]
+    example_fail: "The #1 tender platform in the industry."
+    example_ok: "The tender platform we think handles NZ dairy lots best, judge it against the metrics below."
+    default_severity: revise
+    domains: [marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: ["FTC:puffery"]
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, FTC_HEALTH_GUIDANCE]
+
+  - code: MARKETING_REGULATED_CLAIM_UNQUALIFIED
+    name: Regulated claim unqualified
+    axis: marketing
+    definition: >
+      A claim in a regulated category (health, financial, environmental, safety) is
+      made without the qualification or evidence that category requires
+      ("clinically proven", "guaranteed returns", "eco-friendly", "non-toxic").
+    cues: [clinically proven, guaranteed returns, eco-friendly, sustainable, non-toxic, FDA]
+    example_fail: "Clinically proven and 100% eco-friendly."
+    example_ok: "Reduced symptom scores in one 40-person trial (not independently replicated); packaging is 70% recycled, the product isn't certified."
+    default_severity: block
+    domains: [marketing]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["FTC:substantiation"]
+    maps_to_literature: [FTC_HEALTH_GUIDANCE, FTC_SUBSTANTIATION_1984]
+
+  - code: MARKETING_BEFORE_AFTER_UNCONTROLLED
+    name: Before/after uncontrolled
+    axis: marketing
+    definition: >
+      A before/after or testimonial result implies typical outcomes from an
+      atypical or uncontrolled example, with no "results not typical" honesty.
+    cues: [results like, went from, transformed, in just X days, see the difference]
+    example_fail: "One client went from 60% to 95% clearance, you can too."
+    example_ok: "One client's clearance rose from 60% to 95%; that was their best case, typical lift in our data is 5-10 points."
+    default_severity: revise
+    domains: [marketing]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: advisory, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["FTC:substantiation"]
+    maps_to_literature: [FTC_HEALTH_GUIDANCE, SPIN_RCT_BOUTRON_2010, SPIN_SR_YAVCHITZ_2016]

@@ -1,0 +1,14 @@
+overclaim
+=========
+
+Dual-licensed: ontology content under CC0 1.0 (LICENSE-DATA), code under MIT
+(LICENSE).
+
+Attribution (a courtesy, not a CC0 obligation)
+----------------------------------------------
+
+The `grounding` pack (ontology/grounding.yaml) is distilled from WillowEmberly's
+"AI Grounding Principles" and the Negentropic Reasoning Protocol (NRP) failure-mode
+taxonomy, shared openly on r/Negentropy / r/PromptEngineering. The upstream Open
+Cognitive Avionics Package (OCAP) is itself dedicated to the public domain under
+CC0. Credit: WillowEmberly / Negentropy.

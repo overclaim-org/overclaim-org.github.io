@@ -1,0 +1,105 @@
+# Overclaim Ontology, sales pack (DRAFT)
+# Sales-specific failure modes. Core overclaim codes soften in the sales frame;
+# these and the substantiation axis do NOT, because they map to claims a buyer
+# acts on and that carry legal/contractual weight.
+
+version: 0.1.0-draft
+pack: sales
+
+codes:
+  - code: SALES_ROI_FABRICATED
+    name: ROI fabricated
+    axis: sales
+    definition: >
+      An ROI, payback, or savings figure is presented as fact when it rests on an
+      undisclosed or weak model. The fix is to declare the model and its weakness,
+      not to drop the number.
+    cues: [save you, ROI of, pays for itself, X in savings, payback in]
+    example_fail: "You'll save $200k a year."
+    example_ok: "On our model (your stated volumes, 15% efficiency assumption, labour at $X) that's ~$200k/yr; the efficiency figure is the soft input."
+    default_severity: block
+    domains: [sales]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: ["FTC:substantiation"]
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, FTC_HEALTH_GUIDANCE]
+
+  - code: SALES_SOCIAL_PROOF_UNVERIFIABLE
+    name: Social proof unverifiable
+    axis: sales
+    definition: >
+      A testimonial, logo, or "used by leading X" claim is made with no verifiable
+      specifics (who, when, what result).
+    cues: [trusted by, used by leading, our customers love, join thousands]
+    example_fail: "Trusted by leading processors across the industry."
+    example_ok: "Three of the top-ten NZ dairy processors use it for tender execution (reference calls available)."
+    default_severity: revise
+    domains: [sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, PROPAGANDA_DASANMARTINO_2019]
+
+  - code: SALES_URGENCY_MANUFACTURED
+    name: Urgency manufactured
+    axis: sales
+    definition: >
+      Artificial scarcity or a deadline is asserted to force action, not grounded
+      in a real constraint.
+    cues: [only today, limited spots, price goes up, last chance, act now]
+    example_fail: "This price is only available until Friday."
+    example_ok: "Current pricing holds through the quarter; after that it's under review, I'll flag if it changes."
+    default_severity: revise
+    domains: [sales]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [SEMEVAL_PROPAGANDA_2020, PROPAGANDA_DASANMARTINO_2019]
+
+  - code: SALES_FEATURE_CAPABILITY_CONFLATION
+    name: Feature/capability conflation
+    axis: sales
+    definition: >
+      A feature is presented as if it directly delivers an outcome it only enables
+      or partially supports.
+    cues: [automatically, eliminates, just works, handles everything, end to end]
+    example_fail: "Our dashboard eliminates manual reconciliation."
+    example_ok: "The dashboard surfaces the mismatches; a person still adjudicates them, which cuts the manual step rather than removing it."
+    default_severity: revise
+    domains: [sales, marketing]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
+    cleared_by: []
+    maps_to: []
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, HABER_CLAIMS_2018]
+
+  - code: SALES_OVERCOMMITMENT
+    name: Overcommitment
+    axis: sales
+    definition: >
+      Delivery, scope, SLA, or timeline is promised beyond what is contracted or
+      feasible, creating a commitment the deliverer may not control.
+    cues: [we'll have it by, guaranteed uptime, no problem, we can do that, fully customised]
+    example_fail: "We'll have the integration live in two weeks, guaranteed."
+    example_ok: "A two-week target assumes your API access by day one; I'll confirm the date once scoping is done."
+    default_severity: revise
+    domains: [sales, management]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [SEARLE_SPEECH_ACTS_1969, FTC_SUBSTANTIATION_1984]
+
+  - code: SALES_COMPLIANCE_CLAIM_UNQUALIFIED
+    name: Compliance claim unqualified
+    axis: sales
+    definition: >
+      A regulatory or security posture (SOC2, ISO, GDPR, "compliant", "certified")
+      is asserted without scope, current status, or evidence.
+    cues: [SOC2 certified, GDPR compliant, ISO, fully secure, bank-grade]
+    example_fail: "We're SOC2 certified and fully GDPR compliant."
+    example_ok: "SOC2 Type II report dated March (available under NDA); GDPR: we're a processor with a DPA, EU data stays in eu-west-1."
+    default_severity: block
+    domains: [sales]
+    applies_in_frames: {analytical: defect, advocacy: defect, sales: defect, status: defect}
+    cleared_by: []
+    maps_to: ["FTC:substantiation"]
+    maps_to_literature: [FTC_SUBSTANTIATION_1984, FTC_HEALTH_GUIDANCE]
