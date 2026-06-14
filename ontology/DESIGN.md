@@ -124,8 +124,9 @@ cross-cutting packs do not already name; cross-domain reuse goes through a code'
 Avionics and agentic-execution codes from the source corpus (`ORIENTATION_*`,
 `EXECUTION_*`, `STRUCTURE_*`, `STATE_*`, process-risk, system codes) are
 deliberately excluded: they are about agent execution and spatial control, not
-prose overclaim. They can return later as a separate optional "agentic-execution"
-pack if there is demand.
+prose overclaim. They are out of scope for overclaim entirely, not a deferred pack:
+detecting them needs an execution-trace substrate, not the prose rubric, so if the
+angle is ever pursued it is a separate project (see Open questions #4).
 
 `MANAGEMENT_COMMITMENT_WITHOUT_MECHANISM` is a headline addition: a promise verb
 with no owner, date, or first step ("I'll make sure", "put a plan around it"). It
