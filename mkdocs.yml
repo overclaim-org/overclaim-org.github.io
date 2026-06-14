@@ -1,6 +1,6 @@
 site_name: Overclaim
 site_description: "An ontology of epistemic-overclaim failure modes: named codes for the ways confident language outruns its evidence. An agent-facing rubric a model fetches and applies."
-site_url: https://overclaim-org.github.io/
+site_url: https://overclaim.org/
 repo_url: https://github.com/overclaim-org/overclaim-org.github.io
 repo_name: overclaim-org/overclaim-org.github.io
 edit_uri: edit/master/docs/

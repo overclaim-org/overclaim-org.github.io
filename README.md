@@ -2,8 +2,7 @@
 
 An ontology of epistemic-overclaim failure modes: named codes for the ways
 confident language outruns its evidence, in LLM and human prose. Published at
-**[overclaim-org.github.io](https://overclaim-org.github.io)** (custom domain
-`overclaim.org` pending).
+**[overclaim.org](https://overclaim.org)**.
 
 This is an *agent-facing domain*. The primary consumer is a model: the site serves
 a rubric an LLM fetches and applies to a piece of text, judging whether confidence

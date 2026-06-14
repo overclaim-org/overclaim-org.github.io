@@ -15,7 +15,7 @@ Pick the rubric matching your text's genre, paste it into a context window above
 the subject text, and apply it:
 
 ```text
-Fetch https://overclaim-org.github.io/rubric/analytical.md
+Fetch https://overclaim.org/rubric/analytical.md
 Paste it above the text you want checked.
 The model returns: per-claim findings, cleared hedges, and one aggregated decision
 (AUTHORIZE < CLARIFY < CONSTRAIN < REVISE < BLOCK).

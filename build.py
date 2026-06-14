@@ -30,7 +30,7 @@ import rubric  # noqa: E402  (the packs -> rubric compiler)
 
 # Base URL for absolute links in llms.txt. Flip to https://overclaim.org once the
 # custom domain is wired (the org Pages site then serves at the apex).
-BASE_URL = "https://overclaim-org.github.io"
+BASE_URL = "https://overclaim.org"
 
 # v1 shipped scope: the validated spine + grounding + management. The deferred
 # packs (engineering, sales, marketing) live in ontology/packs/ as source but are

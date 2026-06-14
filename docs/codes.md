@@ -1,6 +1,6 @@
 # Code catalog
 
-Every code in the v1 packs (core 0.1.0-draft, substantiation 0.1.0-draft, grounding 0.1.0-draft, management 0.1.0-draft). 39 codes. The YAML packs are the source of truth; this page is generated from them. The machine-readable packs are at [`/packs/`](https://overclaim-org.github.io/packs/core.yaml).
+Every code in the v1 packs (core 0.1.0-draft, substantiation 0.1.0-draft, grounding 0.1.0-draft, management 0.1.0-draft). 39 codes. The YAML packs are the source of truth; this page is generated from them. The machine-readable packs are at [`/packs/`](https://overclaim.org/packs/core.yaml).
 
 Severity ladder: `clarify < constrain < revise < block`. Disposition per genre comes from each code's frame gate (`defect` = full severity, `advisory` = one notch down, `suppressed` = expected for that genre).
 
