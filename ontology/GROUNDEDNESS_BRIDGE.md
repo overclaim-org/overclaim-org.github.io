@@ -58,9 +58,10 @@ rule below, not authored by hand.
 
 ## What counts as one claim (atomicity rule)
 
-Extraction decomposes prose into atomic, independently checkable assertions. The
-rule, tighter than RAGAS's loose "statement" split because each claim gets its own
-address and may be read out of context by a downstream agent:
+Extraction decomposes prose into atomic, independently checkable assertions, the
+FActScore / SAFE atomic-fact method (decompose, then verify each fact against a
+source). The rule here is tighter than RAGAS's loose "statement" split because each
+claim gets its own address and may be read out of context by a downstream agent:
 
 - One predicate per claim. Split conjunctions ("X and Y" becomes two claims).
 - Split an embedded justification: "X because Y" yields the factual claim X and the

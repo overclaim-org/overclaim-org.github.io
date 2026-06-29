@@ -226,13 +226,38 @@ codes:
     maps_to: []
     maps_to_literature: [HYLAND_HEDGING_1996, BIOSCOPE_2008, FTC_SUBSTANTIATION_1984]
 
+  - code: COMMUNICATION_EVASIVE_UNDERCLAIM
+    name: Evasive underclaim
+    axis: communication
+    definition: >
+      Confidence is hedged below what the evidence on display supports, with no named
+      basis for the uncertainty, so a demonstrably well-grounded claim is weakened to
+      dodge commitment or accountability. The mirror of false certainty: blanket
+      "can't really say" hedging, sandbagging a clean result, or a load-bearing
+      finding down-weighted into a throwaway qualifier. Two non-triggers: honest
+      uncertainty that names its cause (clears as a declared limitation), and restraint
+      that is proportionate because the evidence shown is genuinely thin (correct
+      calibration, not underclaim). Doubt aimed at another party's claim is
+      COMMUNICATION_DOUBT_SEEDING.
+    cues: ["I can't really say", "hard to say", "results may vary", "more or less", "just my take", "could be wrong, but", "I wouldn't want to commit"]
+    example_fail: "The benchmark passed in all ten regions, but I wouldn't want to say it's ready."
+    example_ok: "The benchmark passed in all ten regions, so it's ready for the staged rollout; the one path we didn't cover is concurrent writes."
+    default_severity: revise
+    domains: [core, management]
+    applies_in_frames: {analytical: defect, advocacy: advisory, sales: suppressed, status: defect}
+    cleared_by: [LIMITATION_DECLARED]
+    maps_to: []
+    maps_to_literature: [LIN_VERBAL_UNCERTAINTY_2022, HYLAND_HEDGING_1996, CONLL_HEDGE_2010, FACTBANK_2009, SPERBER_EPISTEMIC_VIGILANCE_2010]
+
   - code: COMMUNICATION_DOUBT_SEEDING
     name: Doubt seeding
     axis: communication
     definition: >
       Unsupported uncertainty is introduced to weaken a competing claim, source, or
-      option. The issue is not honest uncertainty; it is raising doubt without
-      evidence, criteria, or a path to resolution.
+      option other than the author's own. The issue is not honest uncertainty; it is
+      raising doubt without evidence, criteria, or a path to resolution. Self-directed
+      doubt that sandbags the author's own grounded claim is
+      COMMUNICATION_EVASIVE_UNDERCLAIM, not this code.
     cues: [questions remain, can we really trust, some people say, just asking questions, raises concerns]
     example_fail: "The audit passed, but can we really trust those numbers?"
     example_ok: "The audit passed. The remaining concern is sample coverage: it excluded the two newest regions, so we need that follow-up before relying on the total."

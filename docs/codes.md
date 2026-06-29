@@ -1,6 +1,6 @@
 # Code catalog
 
-Every code in the v1 packs (core 0.1.0-draft, substantiation 0.1.0-draft, grounding 0.1.0-draft, management 0.1.0-draft). 39 codes. The YAML packs are the source of truth; this page is generated from them. The machine-readable packs are at [`/packs/`](https://overclaim.org/packs/core.yaml).
+Every code in the v1 packs (core 0.1.0-draft, substantiation 0.1.0-draft, grounding 0.1.0-draft, management 0.1.0-draft). 40 codes. The YAML packs are the source of truth; this page is generated from them. The machine-readable packs are at [`/packs/`](https://overclaim.org/packs/core.yaml).
 
 Severity ladder: `clarify < constrain < revise < block`. Disposition per genre comes from each code's frame gate (`defect` = full severity, `advisory` = one notch down, `suppressed` = expected for that genre).
 
@@ -202,13 +202,24 @@ A summary compresses a detailed source so hard that load-bearing qualifications 
 
 **Doubt seeding** , severity `revise`
 
-Unsupported uncertainty is introduced to weaken a competing claim, source, or option. The issue is not honest uncertainty; it is raising doubt without evidence, criteria, or a path to resolution.
+Unsupported uncertainty is introduced to weaken a competing claim, source, or option other than the author's own. The issue is not honest uncertainty; it is raising doubt without evidence, criteria, or a path to resolution. Self-directed doubt that sandbags the author's own grounded claim is COMMUNICATION_EVASIVE_UNDERCLAIM, not this code.
 
 - **Fails:** The audit passed, but can we really trust those numbers?
 - **OK:** The audit passed. The remaining concern is sample coverage: it excluded the two newest regions, so we need that follow-up before relying on the total.
 - **Frames:** analytical: defect, advocacy: advisory, sales: advisory, status: defect
 - **Cleared by:** LIMITATION_DECLARED
 - **Maps to:** PROPAGANDA:doubt, PROPAGANDA:FUD
+
+### `COMMUNICATION_EVASIVE_UNDERCLAIM`
+
+**Evasive underclaim** , severity `revise`
+
+Confidence is hedged below what the evidence on display supports, with no named basis for the uncertainty, so a demonstrably well-grounded claim is weakened to dodge commitment or accountability. The mirror of false certainty: blanket "can't really say" hedging, sandbagging a clean result, or a load-bearing finding down-weighted into a throwaway qualifier. Two non-triggers: honest uncertainty that names its cause (clears as a declared limitation), and restraint that is proportionate because the evidence shown is genuinely thin (correct calibration, not underclaim). Doubt aimed at another party's claim is COMMUNICATION_DOUBT_SEEDING.
+
+- **Fails:** The benchmark passed in all ten regions, but I wouldn't want to say it's ready.
+- **OK:** The benchmark passed in all ten regions, so it's ready for the staged rollout; the one path we didn't cover is concurrent writes.
+- **Frames:** analytical: defect, advocacy: advisory, sales: suppressed, status: defect
+- **Cleared by:** LIMITATION_DECLARED
 
 ### `COMMUNICATION_FALSE_CERTAINTY`
 
@@ -342,8 +353,8 @@ A loaded technical term (entropy, dimensions, intelligence, resonance, quantum, 
 
 A promise or commitment is stated with no owner, date, or first step. The claim is about action, and what is missing is the mechanism, not the evidence (the distinction from NARRATIVE_CONFIDENCE_EVIDENCE_DECOUPLED).
 
-- **Fails:** We need to work through the key-person risk properly, let's make that an early discussion.
-- **OK:** I'll book a 60-min session this week to scope the key-person risk; output is a written continuity plan with a named backup by month-end.
+- **Fails:** We really need to get the onboarding backlog under control, let's make that an early discussion.
+- **OK:** I'll run a 60-min session this Thursday on the onboarding backlog; output is a written triage plan with a named owner per step by Friday.
 - **Frames:** analytical: defect, advocacy: advisory, sales: advisory, status: defect
 
 ### `MANAGEMENT_CREDENTIAL_AS_PLAN`
@@ -352,8 +363,8 @@ A promise or commitment is stated with no owner, date, or first step. The claim 
 
 Experience or seniority is offered in place of an approach. The track record may be real, but it answers "why me" not "how" or "by when".
 
-- **Fails:** I've spent a long time managing customer relationships, I'm comfortable stepping into that role.
-- **OK:** I'll take the customer side. Week one I'll meet the top five accounts; weekly I'll route only escalations to you, on a shared list.
+- **Fails:** I've run support teams for years, I'm comfortable taking this on.
+- **OK:** I'll take support. Week one I'll map the top five recurring issues with the team; after that I send you a weekly one-page summary and escalate only blockers.
 - **Frames:** analytical: defect, advocacy: advisory, sales: advisory, status: defect
 - **Maps to:** LOGIC:appeal_to_authority
 
@@ -363,8 +374,8 @@ Experience or seniority is offered in place of an approach. The track record may
 
 A proposal is restated back as agreement, adding no decision, ownership, or new constraint. Reads as commitment but moves nothing.
 
-- **Fails:** One shared roadmap, surface the hidden dependencies, then choose the team structure. I'm aligned with all of that.
-- **OK:** Agreed on all three. I'll own the team-structure decision and bring a recommendation to next month's review; the other two are yours to drive.
+- **Fails:** Consolidate the tools, write up the handoffs, then pick an owner for each area. I'm aligned with all of that.
+- **OK:** Agreed on all three. I'll own the tooling decision and bring a recommendation to next month's review; the handoffs and owners are yours to drive.
 - **Frames:** analytical: defect, advocacy: advisory, sales: advisory, status: defect
 
 ### `MANAGEMENT_REASSURANCE_ENACTS_RISK`

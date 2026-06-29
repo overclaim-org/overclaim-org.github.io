@@ -41,7 +41,7 @@ every deploy, so the served rubric never drifts from source.
 
 ## Scope (v1)
 
-39 codes across four packs: `core`, `substantiation`, `grounding`, `management`. The
+40 codes across four packs: `core`, `substantiation`, `grounding`, `management`. The
 `engineering`, `sales`, and `marketing` packs live in `ontology/packs/` as source but
 are not yet shipped; they are deferred to v1.x until they clear the contribution rule
 through real use. See [`docs/design.md`](docs/design.md).

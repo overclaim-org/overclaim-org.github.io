@@ -9,6 +9,8 @@ copyright: Ontology content (YAML, rubric, docs) under CC0 1.0. Code under MIT.
 
 theme:
   name: material
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default

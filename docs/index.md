@@ -54,7 +54,7 @@ of real public text (AI and human) run through the rubric, or read the
 
 ## Status
 
-Draft, v1: 39 codes across four packs (core, substantiation, grounding,
+Draft, v1: 40 codes across four packs (core, substantiation, grounding,
 management). The engineering, sales, and marketing packs are deferred to v1.x
 until they clear the contribution rule through real use. Ontology content is CC0;
 code is MIT. The grounding pack is distilled from WillowEmberly / Negentropy

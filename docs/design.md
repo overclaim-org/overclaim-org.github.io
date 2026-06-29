@@ -50,19 +50,27 @@ contribution is the synthesis and the delivery, not the codes in isolation:
    propaganda technique, advertising substantiation, automation bias, and
    requirements-quality work into one named code vocabulary.
 2. The genre-relative frame gate (severity scored against the declared purpose).
-3. The delivery model: the ontology is pasted into a context window and an LLM
-   applies it , an agent-facing domain rather than a human docs site.
+3. Serving *this* named taxonomy as an agent-facing domain , pull content
+   (`llms.txt` + rendered rubric) a model ingests, rather than a human docs site.
+   The apply-a-rubric loop itself is not the novel part: self-critique frameworks
+   (Self-Refine, CRITIC, Chain-of-Verification) and Constitutional-AI self-critique
+   already do "a model applies criteria to its own output and revises."
 
 ## Prior art
 
-The surrounding space splits into two mature camps this fuses:
+The surrounding space splits into mature camps this fuses:
 
 - **Governance / eval runtimes** (DeepEval, RAGAS, Guardrails, NeMo-Guardrails,
   TruLens, llm-guard) operationalize the confidence-vs-evidence axis as numeric
-  scores, but ship no named taxonomy of rhetorical overclaim modes.
+  scores, but ship no named taxonomy of rhetorical overclaim modes. Rubric-scoring
+  engines (Prometheus, FLASK) and atomic-fact factuality methods (FActScore, SAFE)
+  are the natural execution targets, not competing taxonomies.
 - **Reasoning-failure taxonomies** (fallacy datasets, clinical-trial "spin"
   detection, hedge-cue detection) name the failures academically but ship as
   datasets and classifiers, not a paste-in rubric.
+- **Served-taxonomy precedent**: Llama Guard + the MLCommons hazard taxonomy show a
+  named, public taxonomy applied by a model, in the safety domain. overclaim borrows
+  that shape; the wedge is the overclaim taxonomy and frame gate, not the mechanism.
 
 The wedge: a named rhetorical-overclaim taxonomy sitting on top of a real
 groundedness scorer. The overclaim codes are the qualitative layer on top of a
@@ -70,7 +78,7 @@ quantitative groundedness score.
 
 ## Scope
 
-v1 ships **core + substantiation + grounding + management** (39 codes). The
+v1 ships **core + substantiation + grounding + management** (40 codes). The
 discriminator is validation maturity, not domain coverage: core and substantiation
 are the validated spine; grounding cleared the contribution rule and carries the
 WillowEmberly / Negentropy attribution; management is validated against live exec

@@ -8,7 +8,7 @@ Scope: all 53 draft ontology codes across core, substantiation, grounding, engin
 
 The individual codes are mostly not academically novel. Nearly every code maps to an established concept, an existing annotation task, a formal taxonomy, a legal substantiation rule, or a software-engineering standard. The strongest existing taxonomy analogs are clinical-trial spin, propaganda technique classification, FTC advertising substantiation, hallucination/attribution evaluation, factuality/hedging annotation, and automation bias.
 
-The defensible contribution is narrower and cleaner: a unified, frame-aware operational rubric for detecting when confident language outruns its evidence across research, LLM output, engineering, sales, marketing, and management prose. The most plausibly novel pieces are the cross-domain synthesis, the frame gate, the delivery model as an LLM-applied paste-in rubric, and a few management/grounding formulations that combine known concepts but are not obviously named as standard taxonomy members.
+The defensible contribution is narrower and cleaner: a unified, frame-aware operational rubric for detecting when confident language outruns its evidence across research, LLM output, engineering, sales, marketing, and management prose. The most plausibly novel pieces are the cross-domain synthesis, the frame gate, the *agent-facing delivery* (this taxonomy served as pull content for a model to ingest), and a few management/grounding formulations that combine known concepts but are not obviously named as standard taxonomy members. The apply-a-rubric loop itself is **not** a novel piece: self-critique frameworks (Self-Refine, CRITIC, Chain-of-Verification) and Constitutional-AI self-critique already do "model applies criteria to its own output and revises." What is distinctive is serving *this* named taxonomy that way, not the mechanism.
 
 ## Verdict Legend
 
@@ -91,9 +91,9 @@ Implication: the sales and communication packs are mostly applied rhetoric/persu
 
 ### Hedging, Factuality, and Calibration
 
-Hyland's hedging work, BioScope, CoNLL-2010 hedge detection, FactBank, and CommitmentBank all formalize uncertainty, source commitment, factuality, and how claims are linguistically qualified. Guo et al. and Lin et al. provide the ML calibration bridge. Rashkin's AIS and hallucination surveys cover source-grounded generation.
+Hyland's hedging work, BioScope, CoNLL-2010 hedge detection, FactBank, and CommitmentBank all formalize uncertainty, source commitment, factuality, and how claims are linguistically qualified. Guo et al. and Lin et al. provide the ML calibration bridge. Rashkin's AIS and hallucination surveys cover source-grounded generation. On the verification side, Min et al.'s FActScore and Wei et al.'s SAFE/LongFact formalize the atomic-fact decomposition (split prose into checkable assertions, verify each against a source) that the `GROUNDEDNESS_BRIDGE` claims-ledger reuses.
 
-Implication: confidence, certainty, compression loss, and confidence/evidence decoupling should cite this literature heavily.
+Implication: confidence, certainty, compression loss, and confidence/evidence decoupling should cite this literature heavily; the claims-ledger should credit FActScore/SAFE as the decomposition method, not just RAGAS.
 
 ### Automation Bias and Grounding
 
@@ -112,6 +112,12 @@ Implication: for commercial packs, cite FTC/NAD-style standards as the proof bar
 The management pack is the thinnest. Speech-act theory covers commissives and promises; implementation-intention research covers why vague goals fail without when/where/how action plans. That supports `MANAGEMENT_COMMITMENT_WITHOUT_MECHANISM`, but the other management micro-codes are mostly local operational formulations.
 
 Implication: management/commercial language is the best candidate for a narrow original contribution, but only as applied packaging over speech-act and implementation-planning concepts.
+
+### Eval Engines, Served Rubrics, and Self-Critique Delivery
+
+This cluster is about *mechanism and delivery*, not code content, and matters because the prior-art map must not let overclaim claim novelty on the parts that are borrowed. Rubric-scoring engines (Prometheus, FLASK) consume a supplied score rubric and grade prose, the natural execution target for overclaim's rendered rubric. Self-critique / self-refinement frameworks (Self-Refine, CRITIC, Reflexion, Chain-of-Verification) plus Constitutional-AI self-critique establish the apply-a-rubric-and-revise loop. Llama Guard and the MLCommons hazard taxonomy / AILuminate show a named, public taxonomy served and applied by a model, in the safety domain. Eval runtimes (DeepEval, RAGAS, Guardrails, TruLens) are where an overclaim rubric would execute.
+
+Implication: cite these as the homes of the *delivery mechanism* and the *served-taxonomy pattern*. overclaim's defensible novelty is the overclaim taxonomy itself plus the genre frame gate, not the loop or the engine. Prometheus is also worth a `maps_to`/adapter bridge alongside DeepEval/Guardrails.
 
 ## Candidate Watchlist
 
@@ -136,7 +142,7 @@ Avoid:
 
 Acceptable narrower claim:
 
-> The individual failure modes mostly have prior homes. The contribution is the cross-domain synthesis, genre-relative frame gate, and operational packaging for LLM-assisted review.
+> The individual failure modes mostly have prior homes. The contribution is the cross-domain synthesis, the genre-relative frame gate, and the agent-facing delivery (this named taxonomy served as pull content for a model to apply). The apply-a-rubric loop is established self-critique prior art, not part of the contribution.
 
 ## Citation Keys
 
@@ -177,3 +183,13 @@ Acceptable narrower claim:
 - `GOLLWITZER_IMPLEMENTATION_1999`: Gollwitzer, implementation intentions and when/where/how plans. <https://www.prospectivepsych.org/sites/default/files/pictures/Gollwitzer_Implementation-intentions-1999.pdf>
 - `SWALES_GENRE`: Swales genre analysis and discourse-community expectations. Example overview: <https://link.springer.com/article/10.1186/s40554-016-0032-2>
 - `PRAGMA_DIALECTICS`: Pragma-dialectics and communicative activity types. Overview: <https://link.springer.com/article/10.1007/s10503-015-9377-z>
+- `FACTSCORE_MIN_2023`: Min et al., FActScore, atomic-fact factual-precision evaluation. <https://arxiv.org/abs/2305.14251>
+- `SAFE_WEI_2024`: Wei et al., Long-form factuality (SAFE / LongFact), search-augmented atomic-fact verification. <https://arxiv.org/abs/2403.18802>
+- `SELF_REFINE_2023`: Madaan et al., Self-Refine, iterative self-feedback and revision. <https://arxiv.org/abs/2303.17651>
+- `CRITIC_2023`: Gou et al., CRITIC, tool-interactive self-correction. <https://arxiv.org/abs/2305.11738>
+- `REFLEXION_2023`: Shinn et al., Reflexion, verbal self-reflection with memory. <https://arxiv.org/abs/2303.11366>
+- `COVE_2023`: Dhuliawala et al., Chain-of-Verification, self-verification of factual claims. <https://arxiv.org/abs/2309.11495>
+- `PROMETHEUS_2023`: Kim et al., Prometheus, open evaluator LLM scoring prose against a supplied rubric. <https://arxiv.org/abs/2310.08491>
+- `FLASK_2023`: Ye et al., FLASK, fine-grained skill-set evaluation against per-skill rubrics. <https://arxiv.org/abs/2307.10928>
+- `LLAMA_GUARD_2023`: Inan et al., Llama Guard, taxonomy-driven safeguard classifier. <https://arxiv.org/abs/2312.06674>
+- `AILUMINATE_MLCOMMONS_2024`: MLCommons AI safety hazard taxonomy / AILuminate benchmark. <https://mlcommons.org/benchmarks/ailuminate/>

@@ -54,7 +54,12 @@ Not as "a novel taxonomy of epistemic overclaim". The defensible, narrower piece
 1. The cross-domain synthesis into one named code vocabulary.
 2. The genre-relative **frame gate** (severity scored against the declared
    purpose).
-3. The delivery model: ontology pasted into a context window, LLM applies it.
+3. The delivery as an *agent-facing domain*: this taxonomy served as pull content
+   (`llms.txt` + rendered rubric) for a model to ingest. The apply-a-rubric loop
+   itself is not novel (self-critique frameworks, Self-Refine / CRITIC /
+   Chain-of-Verification, and Constitutional-AI self-critique already do "model
+   applies criteria to output and revises"); what is distinctive is serving *this*
+   named overclaim taxonomy as the pulled rubric, not the loop.
 4. A few management/grounding formulations that combine known concepts not
    obviously named as standard taxonomy members.
 
@@ -100,20 +105,32 @@ The surrounding space splits into two mature camps nobody has fused this way.
   DeepEval, RAGAS (faithfulness = claims grounded in context), Guardrails,
   NeMo-Guardrails, TruLens (groundedness), llm-guard. These operationalize the
   confidence-vs-evidence axis as numeric scores, but none ship a named taxonomy of
-  rhetorical overclaim modes.
+  rhetorical overclaim modes. Adjacent: **rubric-scoring engines** (Prometheus,
+  FLASK) consume a supplied score rubric and grade prose, the natural execution
+  target for overclaim's rendered rubric; and **atomic-claim factuality** methods
+  (FActScore, SAFE/LongFact) decompose text into checkable assertions, the method
+  the `GROUNDEDNESS_BRIDGE` claims-ledger reuses.
 - **Reasoning-failure taxonomies** name the failures academically: the LOGIC
   dataset's 13-class fallacy taxonomy, causal-reasoning evals, clinical-trial
   "spin" detection, hedge-cue detection (CoNLL-2010 / BioScope). These ship as
   datasets and classifiers, not a paste-in rubric.
+- **Delivery-mechanism and served-taxonomy precedents.** The apply-a-rubric-and-
+  revise loop is established: self-critique frameworks (Self-Refine, CRITIC,
+  Reflexion, Chain-of-Verification) and Constitutional-AI self-critique. A named
+  taxonomy *served* and applied by a model also exists in the safety domain: Llama
+  Guard + the MLCommons hazard taxonomy / AILuminate. overclaim borrows both the
+  mechanism and the served-taxonomy shape; the novelty is the overclaim taxonomy and
+  the frame gate, not the loop.
 
 The gap, and this repo's wedge: a named rhetorical-overclaim taxonomy sitting on
 top of a real groundedness scorer. The RAGAS/TruLens bridge is the point: the
 overclaim codes are the qualitative layer on top of their quantitative
-groundedness score. The README should lead with that combination.
+groundedness score. The README should lead with that combination, not with the
+delivery loop (which is borrowed prior art).
 
 ## The ontology
 
-54 codes across 7 packs. The cross-cutting packs are `core.yaml`
+55 codes across 7 packs. The cross-cutting packs are `core.yaml`
 (epistemic-overclaim core), `substantiation.yaml` (shared proof-bar axis), and
 `grounding.yaml` (reasoning-environment "warning lights", CC0-attributed to
 WillowEmberly / Negentropy). The per-domain packs are
@@ -127,6 +144,33 @@ deliberately excluded: they are about agent execution and spatial control, not
 prose overclaim. They are out of scope for overclaim entirely, not a deferred pack:
 detecting them needs an execution-trace substrate, not the prose rubric, so if the
 angle is ever pursued it is a separate project (see Open questions #4).
+
+### Underclaim and the scope boundary
+
+The object is calibration (confidence vs evidence), which is symmetric, but the
+brand, the harm profile, and the served detection use case are all one-directional,
+so the default scope is overclaim. Two deliberate boundary decisions follow.
+
+- **Underclaim is in scope only as evasion.** The manipulative direction (raising
+  unsupported doubt against someone else's claim) is already `COMMUNICATION_DOUBT_SEEDING`.
+  The remaining gap is *self-directed* underclaim: hedging a well-grounded claim
+  below the evidence with no named basis, to dodge commitment or accountability,
+  which `COMMUNICATION_EVASIVE_UNDERCLAIM` names. It is the twin of the
+  anti-sycophancy guardrail (`COMMUNICATION_IDENTITY_BINDING`): an agent that hedges
+  everything to never be wrong is the evasion-mirror of the sycophant, and that case
+  is what makes the code earn its place in an agent-facing rubric. We do not build a
+  symmetric "underclaim" pack; the harm asymmetry (a reader acting on false
+  confidence is worse than under-trusting a true finding) does not justify the
+  doubled surface. A blanket hedge that names a real residual is honest calibration,
+  not this code, and clears via `LIMITATION_DECLARED`.
+- **Relevance failures are out of scope.** Non-answer, dodging the question, and
+  changing the subject are a Gricean relevance object, not an evidence-calibration
+  one, and belong out the same way the avionics codes do. **Motte-and-bailey** is a
+  known blind spot rather than a missing code: it is a dynamic across two moves
+  (assert strong, retreat to weak under challenge), and the single-artifact rubric
+  cannot see the retreat. Paltering and spin are *not* a gap: they are already the
+  `substantiation` pack (`SUBSTANTIATION_CHERRY_PICKED`, `_DENOMINATOR_HIDDEN`,
+  `_SPIN_NONPRIMARY_OUTCOME`).
 
 `MANAGEMENT_COMMITMENT_WITHOUT_MECHANISM` is a headline addition: a promise verb
 with no owner, date, or first step ("I'll make sure", "put a plan around it"). It
@@ -179,10 +223,10 @@ gap-finding, not discovery-by-volume. The ontology is not AI-specific: it names
 human rhetorical failures that AI reproduces, so keep the example net across AI and
 human text.
 
-## Proposed repo layout
+## Repo layout
 
 ```
-overclaim/                     # published as overclaim.org
+overclaim-org.github.io/       # public repo, published as overclaim.org
   ontology/
     core.yaml                  # epistemic-overclaim core
     substantiation.yaml        # shared substantiation axis
@@ -191,48 +235,45 @@ overclaim/                     # published as overclaim.org
     packs/sales.yaml
     packs/marketing.yaml
     packs/management.yaml
+    render/
+      rubric.py                # packs -> rubric markdown; the site build step
+      deepeval_metrics.py      # ontology -> DeepEval custom metrics (planned)
+      guardrails_validators.py # ontology -> Guardrails validators (planned)
+      prometheus_rubric.py     # ontology -> Prometheus score rubric (planned)
+  docs/                        # MkDocs Material source
+    index.md                   # human landing page
+    examples.md                # static worked examples
+    CNAME                      # keeps the custom domain on Pages deploys
+  build.py                     # catalog + MkDocs + raw artifact build
+  mkdocs.yml
+  site/                        # generated output, including raw agent artifacts
   schema/code.schema.json      # machine-readable code definition contract (planned)
-  render/
-    rubric.py                  # packs -> rubric markdown; the site build step (built)
-    deepeval_metrics.py        # ontology -> DeepEval custom metrics (planned)
-    guardrails_validators.py   # ontology -> Guardrails validators (planned)
-  site/                        # MkDocs Material source for overclaim.org (planned)
-    mkdocs.yml
-    docs/
-      index.md                 # human landing page
-      llms.txt                 # agent anchor file (links rubric/*.md + packs/*.yaml)
-      rubric/<genre>.md        # generated by render/rubric.py at build time
-      packs/<pack>.yaml        # raw packs, served verbatim
-  examples/                    # positive/negative example per code, eval fixtures (planned)
 ```
 
-The draft currently keeps the packs at the repo root rather than under `ontology/`;
-`render/rubric.py` resolves either layout. Move all packs together if introducing
-the `ontology/` directory.
+`build.py` injects the agent-facing artifacts after the MkDocs build:
+`/llms.txt`, `/rubric/<genre>.md`, and `/packs/<pack>.yaml`.
 
 ## Open questions
 
 1. **Attribution / licensing , resolved.** Dual-license: the ontology content
    (`*.yaml`, the rubric markdown, docs) under **CC0 1.0** (`CC0-1.0`); the code
-   (`render/rubric.py`, adapters) under **MIT**. CC0 matches the agent-facing goal
-   (frictionless ingestion) and the upstream OCAP, which is itself CC0, so the licence
-   chain stays clean; a software licence on the data would be a category error.
-   Ship `LICENSE` (MIT) + `LICENSE-DATA` (CC0) and state the split in the README.
-   Credit "WillowEmberly / Negentropy" in a NOTICE + the `grounding.yaml`
-   `attribution` field (a courtesy, not a CC0 obligation). Remaining before publish:
-   a courtesy heads-up to WillowEmberly, and confirm whether the gist owner is the
-   same author or a permitted re-poster.
+   (`ontology/render/rubric.py`, adapters) under **MIT**. CC0 matches the
+   agent-facing goal (frictionless ingestion) and the upstream OCAP, which is
+   itself CC0, so the licence chain stays clean; a software licence on the data
+   would be a category error. The repo ships `LICENSE` (MIT), `LICENSE-DATA`
+   (CC0), and NOTICE credit for "WillowEmberly / Negentropy"; `grounding.yaml`
+   also carries attribution metadata.
 2. **Name , resolved.** The project is **overclaim**, published at **overclaim.org**
    (registered through the home-project flow). Drops the earlier `overclaim-ontology`
    / `claimguard` / `lighthouse-ontology` candidates: "overclaim" is shorter,
    claimable, and matches the domain (and sidesteps the "Lighthouse" collision with
    Google Lighthouse).
 3. **Scope of v1 , resolved.** Ship **core + substantiation + grounding +
-   management** (39 codes); defer **engineering + sales + marketing** (15) to v1.x. The
+   management** (40 codes); defer **engineering + sales + marketing** (15) to v1.x. The
    discriminator is validation maturity, not domain coverage: the four shipped packs
    are battle-tested (core/substantiation are the validated spine; grounding cleared
-   the contribution rule and carries the WillowEmberly attribution; management is
-   validated against two live exec messages). The three deferred packs were added by
+   the contribution rule and carries the WillowEmberly attribution; management was
+   validated against real exec messages, with synthetic examples in the pack). The three deferred packs were added by
    reasoning rather than by running over diverse real genres (~35% / ~15% / ~15%
    completeness), so they have not cleared "true + unnamed + generalises" through real
    use. The rubric build step makes adding a pack later cheap and non-breaking, so v1
@@ -242,17 +283,18 @@ the `ontology/` directory.
    state invariants) from execution traces and state, not from prose, so they break
    the "LLM applies a rubric to subject text" delivery model. If ever pursued it is a
    separate project with its own execution-trace substrate, not a pack here.
-5. **GitHub home , resolved.** A dedicated public org `overclaim` with repo
-   `overclaim.github.io` (mirrors `openconsumables`). The org must be created by hand
-   first (no API for org creation); the home-project flow guides that one step.
+5. **GitHub home , resolved.** The public repo is
+   `overclaim-org/overclaim-org.github.io`. The bare `overclaim` org was not
+   available, so the project uses the dedicated `overclaim-org` org while the
+   public site lives at `https://overclaim.org`.
 
 ## Next steps
 
-The ontology is usable end to end today: render a rubric, paste it plus the subject
-text into a context window. Name is resolved (overclaim / overclaim.org). Remaining
-work, roughly in order: resolve licensing; stand up the overclaim.org site (MkDocs on
-Pages, plus the rubric build step that emits `/rubric/*.md` and `/llms.txt`);
+The ontology is usable end to end today: fetch a rendered rubric, paste it plus
+the subject text into a context window, and apply it. Name, licensing, the public
+site, the custom domain, and HTTPS are resolved. Remaining work, roughly in order:
 battle-test the rendered rubric on real text in a fresh context (prompt quality is
-unproven); then the DeepEval / Guardrails adapters (the quantitative-groundedness
-bridge), a machine-readable code schema, and the `mcp.overclaim.org` endpoint.
+still the main product risk); then the DeepEval / Guardrails / Prometheus adapters
+(the quantitative-groundedness bridge, plus Prometheus as a rubric-scoring target),
+a machine-readable code schema, and the `mcp.overclaim.org` endpoint.
 Validate any new code against the contribution rule.

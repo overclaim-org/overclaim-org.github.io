@@ -1,6 +1,6 @@
 # Overclaim Ontology, management / commercial pack (DRAFT)
 # Failure modes in leadership, organisational, and commercial communication.
-# Validated against two live exec messages (see DESIGN.md, frame gate section).
+# Codes derived and validated from real exec messages; examples below are synthetic.
 
 version: 0.1.0-draft
 pack: management
@@ -14,8 +14,8 @@ codes:
       claim is about action, and what is missing is the mechanism, not the
       evidence (the distinction from NARRATIVE_CONFIDENCE_EVIDENCE_DECOUPLED).
     cues: ["I'll make sure", "put a plan around it", "let's agree a way", "on my radar", "we need to", "early discussion"]
-    example_fail: "We need to work through the key-person risk properly, let's make that an early discussion."
-    example_ok: "I'll book a 60-min session this week to scope the key-person risk; output is a written continuity plan with a named backup by month-end."
+    example_fail: "We really need to get the onboarding backlog under control, let's make that an early discussion."
+    example_ok: "I'll run a 60-min session this Thursday on the onboarding backlog; output is a written triage plan with a named owner per step by Friday."
     default_severity: revise
     domains: [management]
     applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
@@ -30,8 +30,8 @@ codes:
       A proposal is restated back as agreement, adding no decision, ownership, or
       new constraint. Reads as commitment but moves nothing.
     cues: ["I'm aligned with all of that", "you've got it right", "agree with all", "makes sense"]
-    example_fail: "One shared roadmap, surface the hidden dependencies, then choose the team structure. I'm aligned with all of that."
-    example_ok: "Agreed on all three. I'll own the team-structure decision and bring a recommendation to next month's review; the other two are yours to drive."
+    example_fail: "Consolidate the tools, write up the handoffs, then pick an owner for each area. I'm aligned with all of that."
+    example_ok: "Agreed on all three. I'll own the tooling decision and bring a recommendation to next month's review; the handoffs and owners are yours to drive."
     default_severity: clarify
     domains: [management]
     applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
@@ -62,8 +62,8 @@ codes:
       Experience or seniority is offered in place of an approach. The track record
       may be real, but it answers "why me" not "how" or "by when".
     cues: ["I've spent years", "I'm comfortable", "done this before", "I know this space"]
-    example_fail: "I've spent a long time managing customer relationships, I'm comfortable stepping into that role."
-    example_ok: "I'll take the customer side. Week one I'll meet the top five accounts; weekly I'll route only escalations to you, on a shared list."
+    example_fail: "I've run support teams for years, I'm comfortable taking this on."
+    example_ok: "I'll take support. Week one I'll map the top five recurring issues with the team; after that I send you a weekly one-page summary and escalate only blockers."
     default_severity: clarify
     domains: [management, sales]
     applies_in_frames: {analytical: defect, advocacy: advisory, sales: advisory, status: defect}
